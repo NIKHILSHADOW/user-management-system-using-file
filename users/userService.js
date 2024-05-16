@@ -11,7 +11,7 @@ const getAllUsers = (req, res) => {
 
 const addUser = (req, res) => {
     users.push({ "id": users.length + 1, ...req.body })
-    fs.appendFile(url, users, (err) => {
+    fs.appendFile(url, JSON.stringify(users), (err) => {
         if (err) {
             res.end("error")
         }
@@ -55,8 +55,9 @@ const updateUserById = (req, res) => {
 }
 
 const deleteUserById = (req, res) => {
-    users = users.filter(user => user.id !== Number(req.params.id))
-    fs.writeFile('../MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+    const newUsers = users.filter(user => user.id !== Number(req.params.id))
+    console.log(newUsers.length)
+    fs.writeFile('../MOCK_DATA.json', JSON.stringify(newUsers), (err, data) => {
         if (err) {
             res.end("error!!")
         }
